@@ -1,0 +1,53 @@
+<form name="form" class="css-form" novalidate>
+    <div class="form-horizontal">
+        <h2>{{Titulo}}</h2>
+        <hr />
+        
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th ng-show="NomeVisivel">Nome</th>
+                    <th ng-show="DescricaoVisivel">Descrição</th>
+                    <th ng-show="EmailVisivel">Email</th>
+                    <th ng-show="DataNascimentoVisivel">Data de nascimento</th>
+                    <th ng-show="TelefoneVisivel">Telefone</th>
+                    <th ng-show="DeVisivel">Inicio da gestão</th>
+                    <th ng-show="AteVisivel">Fim da gestão</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="Dado in Lista">
+                    <td ng-show="NomeVisivel">{{Dado.Nome}}</td>
+                    <td ng-show="DescricaoVisivel">{{Dado.Descricao}}</td>
+                    <td ng-show="EmailVisivel">{{Dado.Email}}</td>
+                    <td ng-show="DataNascimentoVisivel">{{Dado.DataNascimento}}</td>
+                    <td ng-show="TelefoneVisivel">{{Dado.Telefone}}</td>
+                    <td ng-show="DeVisivel">{{Dado.De}}</td>
+                    <td ng-show="AteVisivel">{{Dado.Ate}}</td>
+                    <td>
+                        <button ng-click="Editar(Dado)" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </button>
+                        <button ng-click="Deletar($index)" class="btn btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="form-group">
+            <button ng-click="Novo(Clube)" class="btn btn-primary col-md-12">Novo</button>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-1 col-md-6">
+                <button ng-click="Voltar()" ng-disabled="!form.$valid" class="btn btn-default">Voltar</button>
+            </div>
+            <div class="col-md-offset-3 col-md-2">
+                <button ng-click="Avancar(Clube)" ng-disabled="(Dados == null || Dados.length == 0) && Obrigatorio" class="btn btn-success">Avançar</button>
+            </div>
+        </div>
+    </div>
+</form>

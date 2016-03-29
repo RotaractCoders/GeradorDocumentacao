@@ -1,0 +1,74 @@
+<form name="form" class="css-form" novalidate>
+    <div class="form-horizontal">
+        <h2>Clube 1/5</h2>
+        <hr />
+        
+        <div class="form-group">
+            <label for="ClubeNome" class="control-label col-md-2">Nome do clube: </label>
+            <div class="col-md-6">
+                <input required ng-model="Clube.Nome" type="text" class="form-control" name="ClubeNome" id="ClubeNome" />
+            </div>
+            <div class="col-md-4">
+                <p ng-show="form.ClubeNome.$error.required" class="help-block">O nome do clube é obrigatório</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="ClubeDataFundacao" class="control-label col-md-2">Data de fundação: </label>
+            <div class="col-md-6">
+                <input required ng-model="Clube.DataFundacao" type="date" class="form-control" name="ClubeDataFundacao" id="ClubeDataFundacao" />
+            </div>
+            <div class="col-md-4">
+                <p ng-show="form.ClubeDataFundacao.$error.required" class="help-block">A data de fundação é obrigatório</p>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="ClubeClubePadrinho" class="control-label col-md-2">Clube padrinho: </label>
+            <div class="col-md-6">
+                <input required ng-model="Clube.ClubePadrinho" type="text" class="form-control" name="ClubeClubePadrinho" id="ClubeClubePadrinho" />
+            </div>
+            <div class="col-md-4">
+                <p ng-show="form.ClubeClubePadrinho.$error.required" class="help-block">O clube padrinho é obrigatório</p>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="ClubeReuniaoLocal" class="control-label col-md-2">Local da reunião: </label>
+            <div class="col-md-6">
+                <input required ng-model="Clube.ReuniaoLocal" type="text" class="form-control" name="ClubeReuniaoLocal" id="ClubeReuniaoLocal" />
+                
+            </div>
+            <div class="col-md-4">
+                <p ng-show="form.ClubeReuniaoLocal.$error.required" class="help-block">O local da reunião é obrigatório</p>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="ClubeReuniaoHorario" class="control-label col-md-2">Horário da reunião: </label>
+            <div class="col-md-6">
+                <input required ng-model="Clube.ReuniaoHorario" type="text" class="form-control" name="ClubeReuniaoHorario" id="ClubeReuniaoHorario" />
+            </div>
+            <div class="col-md-4">
+                <p ng-show="form.ClubeReuniaoHorario.$error.required" class="help-block">O horário da reunião é obrigatório</p>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="ClubeEmail" class="control-label col-md-2">E-mail do clube: </label>
+            <div class="col-md-6">
+                <input required ng-model="Clube.Email" type="email" class="form-control" name="ClubeEmail" id="ClubeEmail" />
+            </div>
+            <div class="col-md-4">
+                <p ng-show="form.ClubeEmail.$error.required" class="help-block">O e-mail do clube é obrigatório</p>
+                <p ng-show="!form.ClubeEmail.$valid" class="help-block">O e-mail está em formato invalido</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-7 col-md-5">
+                <button ng-click="AvancarParaSocios(Clube)" ng-disabled="!form.$valid" class="btn btn-success">Avançar</button>
+            </div>
+        </div>
+    </div>
+</form>

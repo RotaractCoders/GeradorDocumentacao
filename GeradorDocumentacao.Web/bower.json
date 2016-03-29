@@ -1,0 +1,29 @@
+{
+  "name": "Gerador de documentacao",
+  "description": "Sistema para gerar a documentação dos clubes",
+  "main": "index.js",
+  "authors": [
+    "Eduardo Baltazar"
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.0",
+    "jquery": "^2.2.0",
+    "bootstrap": "^3.3.6",
+    "angular-route": "^1.5.0",
+    "angular-filter": "^0.5.8"
+  },
+  "devDependencies": {
+    "underscore": "^1.8.3"
+  }
+}

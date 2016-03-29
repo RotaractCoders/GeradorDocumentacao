@@ -1,0 +1,50 @@
+<form name="form" class="css-form" novalidate>
+    <div class="form-horizontal">
+        <h2>Cadastro</h2>
+        <hr />
+        
+        <div class="form-group">
+            <label for="DespesaDescricao" class="control-label col-md-2">Descrição: </label>
+            <div class="col-md-6">
+                <input required ng-model="Despesa.Descricao" type="text" class="form-control" name="DespesaDescricao" id="DespesaDescricao" />
+            </div>
+            <div class="col-md-4">
+                <p ng-show="form.DespesaDescricao.$error.required" class="help-block">A descrição é obrigatório</p>
+            </div>
+        </div>
+        
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Descrição</th>
+                    <th>Valor</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="DespesaItem in Despesa.DespesaItens">
+                    <td>{{DespesaItem.Descricao}}</td>
+                    <td>{{DespesaItem.Valor}}</td>
+                    <td>
+                        <button ng-click="Editar(DespesaItem)" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </button>
+                        <button ng-click="Deletar($index)" class="btn btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="form-group">
+            <button ng-click="Novo(Clube)" class="btn btn-primary col-md-12">Novo</button>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-md-offset-7 col-md-5">
+                <button ng-click="Salvar(Despesa)" ng-disabled="!form.$valid" class="btn btn-success">Salvar</button>
+            </div>
+        </div>
+    </div>
+</form>

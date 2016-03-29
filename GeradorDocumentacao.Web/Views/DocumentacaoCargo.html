@@ -1,0 +1,172 @@
+<form name="form" class="css-form" novalidate>
+    <div class="form-horizontal">
+        <h2>Cargos 3/5</h2>
+        <hr />
+        
+        <div class="form-group">
+            <label for="ClubePresidente" class="control-label col-md-2">Presidente: </label>
+            <div class="col-md-6">
+                <select required ng-model="Clube.Presidente" ng-options="Socio as Socio.Nome for Socio in Clube.Socios" class="form-control" name='ClubePresidente' id='ClubePresidente'>
+                    <option value="">Selecione</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <p ng-show="form.ClubePresidente.$error.required" class="help-block">Selecione o presidente</p>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="ClubeVicePresidente" class="control-label col-md-2">Vice-presidente: </label>
+            <div class="col-md-6">
+                <select required ng-model="Clube.VicePresidente" ng-options="Socio as Socio.Nome for Socio in Clube.Socios" class="form-control" name='ClubeVicePresidente' id='ClubeVicePresidente'>
+                    <option value="">Selecione</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <p ng-show="form.ClubeVicePresidente.$error.required" class="help-block">Selecione o vice presidente</p>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="ClubePrimeiroSecretario" class="control-label col-md-2">1º Secretário: </label>
+            <div class="col-md-6">
+                <select required ng-model="Clube.PrimeiroSecretario" ng-options="Socio as Socio.Nome for Socio in Clube.Socios" class="form-control" name='ClubePrimeiroSecretario' id='ClubePrimeiroSecretario'>
+                    <option value="">Selecione</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <p ng-show="form.ClubePrimeiroSecretario.$error.required" class="help-block">Selecione o 1º secretário</p>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="ClubeSegundoSecretario" class="control-label col-md-2">2º Secretário: </label>
+            <div class="col-md-6">
+                <select ng-model="Clube.SegundoSecretario" ng-options="Socio as Socio.Nome for Socio in Clube.Socios" class="form-control" name='ClubeSegundoSecretario' id='ClubeSegundoSecretario'>
+                    <option value="">Selecione</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="ClubePrimeiroTesoureiro" class="control-label col-md-2">1º Tesoureiro: </label>
+            <div class="col-md-6">
+                <select required ng-model="Clube.PrimeiroTesoureiro" ng-options="Socio as Socio.Nome for Socio in Clube.Socios" class="form-control" name='ClubePrimeiroTesoureiro' id='ClubePrimeiroTesoureiro'>
+                    <option value="">Selecione</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <p ng-show="form.ClubePrimeiroTesoureiro.$error.required" class="help-block">Selecione o 1º tesoureiro</p>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="ClubeSegundoTesoureiro" class="control-label col-md-2">2º Tesoureiro: </label>
+            <div class="col-md-6">
+                <select ng-model="Clube.SegundoTesoureiro" ng-options="Socio as Socio.Nome for Socio in Clube.Socios" class="form-control" name='ClubeSegundoTesoureiro' id='ClubeSegundoTesoureiro'>
+                    <option value="">Selecione</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="ClubeProtocolo" class="control-label col-md-2">Protocolo: </label>
+            <div class="col-md-6">
+                <select ng-model="Clube.Protocolo" ng-options="Socio as Socio.Nome for Socio in Clube.Socios" class="form-control" name='ClubeProtocolo' id='ClubeProtocolo'>
+                    <option value="">Selecione</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="ClubeServicosInternos" class="control-label col-md-2">Diretor de serviços internos: </label>
+            <div class="col-md-6">
+                <select ng-model="Clube.ServicosInternos" ng-options="Socio as Socio.Nome for Socio in Clube.Socios" class="form-control" name='ClubeServicosInternos' id='ClubeServicosInternos'>
+                    <option value="">Selecione</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="ClubeServicosProfissionais" class="control-label col-md-2">Diretor de serviços profissionais: </label>
+            <div class="col-md-6">
+                <select ng-model="Clube.ServicosProfissionais" ng-options="Socio as Socio.Nome for Socio in Clube.Socios" class="form-control" name='ClubeServicosProfissionais' id='ClubeServicosProfissionais'>
+                    <option value="">Selecione</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="ClubeServicosComunidade" class="control-label col-md-2">Diretor de serviços à comunidade: </label>
+            <div class="col-md-6">
+                <select ng-model="Clube.ServicosComunidade" ng-options="Socio as Socio.Nome for Socio in Clube.Socios" class="form-control" name='ClubeServicosComunidade' id='ClubeServicosComunidade'>
+                    <option value="">Selecione</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="ClubeServicosInternacionais" class="control-label col-md-2">Diretor de serviços internacionais: </label>
+            <div class="col-md-6">
+                <select ng-model="Clube.ServicosInternacionais" ng-options="Socio as Socio.Nome for Socio in Clube.Socios" class="form-control" name='ClubeServicosInternacionais' id='ClubeServicosInternacionais'>
+                    <option value="">Selecione</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="ClubeImagemPublica" class="control-label col-md-2">Diretor de imagem pública: </label>
+            <div class="col-md-6">
+                <select ng-model="Clube.ImagemPublica" ng-options="Socio as Socio.Nome for Socio in Clube.Socios" class="form-control" name='ClubeImagemPublica' id='ClubeImagemPublica'>
+                    <option value="">Selecione</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="ClubePastPresident" class="control-label col-md-2">Past president: </label>
+            <div class="col-md-6">
+                <select ng-model="Clube.PastPresident" ng-options="Socio as Socio.Nome for Socio in Clube.Socios" class="form-control" name='ClubePastPresident' id='ClubePastPresident'>
+                    <option value="">Selecione</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-md-offset-1 col-md-6">
+                <button ng-click="Voltar()" class="btn btn-default">Voltar</button>
+            </div>
+            <div class="col-md-offset-3 col-md-2">
+                <button ng-click="Avancar(Clube)" ng-disabled="!form.$valid" class="btn btn-success">Avançar</button>
+            </div>
+        </div>
+        
+    </div>
+</form>

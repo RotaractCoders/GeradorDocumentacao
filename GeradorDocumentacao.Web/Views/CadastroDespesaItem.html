@@ -1,0 +1,33 @@
+<form name="form" class="css-form" novalidate>
+    <div class="form-horizontal">
+        <h2>Cadastro</h2>
+        <hr />
+        
+        <div class="form-group">
+            <label for="DespesaItemDescricao" class="control-label col-md-2">Nome: </label>
+            <div class="col-md-6">
+                <input required ng-model="DespesaItem.Descricao" type="text" class="form-control" name="DespesaItemDescricao" id="DespesaItemDescricao" />
+            </div>
+            <div class="col-md-4">
+                <p ng-show="form.DespesaItemDescricao.$error.required" class="help-block">A descrição é obrigatório</p>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="DespesaItemValor" class="control-label col-md-2">Valor: R$</label>
+            <div class="col-md-6">
+                <input required ng-model="DespesaItem.Valor" type="number" min="0" class="form-control" name="DespesaItemValor" id="DespesaItemValor" />
+            </div>
+            <div class="col-md-4">
+                <p ng-show="form.DespesaItemValor.$error.required" class="help-block">O valor é obrigatório</p>
+                <p ng-show="!form.DespesaItemValor.$valid" class="help-block">O valor deve ser positivo</p>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-md-offset-7 col-md-5">
+                <button ng-click="Salvar(DespesaItem)" ng-disabled="!form.$valid" class="btn btn-success">Salvar</button>
+            </div>
+        </div>
+    </div>
+</form>
