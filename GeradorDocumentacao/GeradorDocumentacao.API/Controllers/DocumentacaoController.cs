@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Web;
 using System.Web.Http;
 
 namespace GeradorDocumentacao.API.Controllers
@@ -18,45 +19,77 @@ namespace GeradorDocumentacao.API.Controllers
         [HttpPost]
         public HttpResponseMessage Gerar(Clube clube)
         {
+            HttpResponseMessage retorno = null;
+
             try
             {
                 var arquivo = PopularWord(clube);
 
-                using (MemoryStream ms = new MemoryStream(File.ReadAllBytes(arquivo)))
-                {
-                    var result = new HttpResponseMessage(HttpStatusCode.OK);
-                    result.Content = new ByteArrayContent(ms.ToArray());
-                    result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.ms-word");
-                    result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
-                    result.Content.Headers.ContentDisposition.FileName = "HelloWorld.docx";
-                    return result;
-                }
+                retorno = MontarResponseMessage(clube, arquivo);
             }
             catch (Exception ex)
             {
-                return null;
+                retorno.StatusCode = HttpStatusCode.InternalServerError;
             }
+
+            return retorno;
+        }
+
+        private static HttpResponseMessage MontarResponseMessage(Clube clube, string arquivo)
+        {
+            HttpResponseMessage retorno;
+
+            using (MemoryStream ms = new MemoryStream(File.ReadAllBytes(arquivo)))
+            {
+                var result = new HttpResponseMessage(HttpStatusCode.OK);
+                result.Content = new ByteArrayContent(ms.ToArray());
+                result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.ms-word");
+                result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+                result.Content.Headers.ContentDisposition.FileName = $"{ clube.Nome.Trim().Replace(' ', '_') }.docx";
+
+                retorno = result;
+            }
+
+            return retorno;
         }
 
         public string PopularWord(Clube clube)
         {
-            var caminho = Environment.GetEnvironmentVariable("TEMP") + "\\";
-            var template = System.Web.HttpContext.Current.Server.MapPath("~") + "Template.docx";
-            var arquivo = caminho + clube.Nome.Replace(' ', '_').ToLower() + ".docx";
-
-            System.IO.File.Copy(template, arquivo, true);
-
             var dicionario = new Dictionary<string, string>();
 
-            ///Pagina 1
-            dicionario.Add("@nome", clube.Nome.ToUpper());
-            dicionario.Add("@data_fundacao", $"{ clube.DataFundacao.Day } DE { clube.DataFundacao.ToString("MMMM").ToUpper() } DE { clube.DataFundacao.Year }");
-            dicionario.Add("@clube_padrinho", $"CLUBE PADRINHO: { clube.ClubePadrinho}");
-            dicionario.Add("@reuniao_local", clube.ReuniaoLocal);
-            dicionario.Add("@reuniao_horario", clube.ReuniaoHorario);
-            dicionario.Add("@email", clube.Email);
+            var caminhoDoNovoArquivo = CriarCopiaDoArquivoTemplate(clube.Nome);
 
-            ///Pagina 3
+            PopularDicionarioComDadosDoClube(clube).ToList()
+                .ForEach(x => dicionario.Add(x.Key, x.Value));
+
+            PopularDicionarioComCargosDoClube(clube).ToList()
+                .ForEach(x => dicionario.Add(x.Key, x.Value));
+
+            PopularTemplate(caminhoDoNovoArquivo, dicionario, clube);
+
+            return caminhoDoNovoArquivo.ToString();
+        }
+
+        private static string CriarCopiaDoArquivoTemplate(string nomeDoClube)
+        {
+            var caminho = Environment.GetEnvironmentVariable("TEMP") + "\\";
+            var caminhoTemplate = HttpContext.Current.Server.MapPath("~") + "Template.docx";
+            var caminhoNovoArquivo = Path.Combine(caminho, ObterNomeDoArquivo(nomeDoClube));
+
+            File.Copy(caminhoTemplate, caminhoNovoArquivo, true);
+
+            return caminhoNovoArquivo;
+        }
+
+        private static string ObterNomeDoArquivo(string nomeDoClube)
+        {
+            return nomeDoClube.Replace(' ', '_').ToLower() + ".docx";
+        }
+
+        private static Dictionary<string, string> PopularDicionarioComCargosDoClube(Clube clube)
+        {
+            var dicionario = new Dictionary<string, string>();
+
             dicionario.Add("@presidente", ObterNome(clube.Presidente));
             dicionario.Add("@vice_presidente", ObterNome(clube.VicePresidente));
             dicionario.Add("@1_secretario", ObterNome(clube.PrimeiroSecretario));
@@ -71,52 +104,64 @@ namespace GeradorDocumentacao.API.Controllers
             dicionario.Add("@diretor_imagem_publica", ObterNome(clube.ImagemPublica));
             dicionario.Add("@past_president", ObterNome(clube.PastPresident));
 
-            SearchAndReplace(arquivo, dicionario, clube);
-
-            return arquivo.ToString();
+            return dicionario;
         }
 
-        private string ObterNome(Socio socio)
+        private static Dictionary<string,string> PopularDicionarioComDadosDoClube(Clube clube)
+        {
+            var dicionario = new Dictionary<string, string>();
+
+            dicionario.Add("@nome", clube.Nome.ToUpper());
+            dicionario.Add("@data_fundacao", $"{ clube.DataFundacao.Day } DE { clube.DataFundacao.ToString("MMMM").ToUpper() } DE { clube.DataFundacao.Year }");
+            dicionario.Add("@clube_padrinho", $"CLUBE PADRINHO: { clube.ClubePadrinho}");
+            dicionario.Add("@reuniao_local", clube.ReuniaoLocal);
+            dicionario.Add("@reuniao_horario", clube.ReuniaoHorario);
+            dicionario.Add("@email", clube.Email);
+
+            return dicionario;
+        }
+
+        private static string ObterNome(Socio socio)
         {
             return socio == null ? string.Empty : socio.Nome;
         }
 
-        private void SearchAndReplace(string document, Dictionary<string, string> dict, Clube clube)
+        private static void PopularTemplate(string document, Dictionary<string, string> dicionario, Clube clube)
         {
             using (var wordDoc = WordprocessingDocument.Open(document, true))
             {
-                PopularCampos(wordDoc, dict);
+                PopularCamposComTextoSimples(wordDoc, dicionario);
                 PopularTabelas(wordDoc, clube);
             }
         }
 
-        private void PopularCampos(WordprocessingDocument wordDoc, Dictionary<string, string> dict)
+        private static void PopularCamposComTextoSimples(WordprocessingDocument wordDoc, Dictionary<string, string> dicionario)
         {
-            var body = wordDoc.MainDocumentPart.Document.Body;
+            var corpoDoWord = wordDoc.MainDocumentPart.Document.Body;
 
-            var lista = body.Descendants<Text>().ToList();
+            var listaComCadaUmaDasLinhasDoWord = corpoDoWord.Descendants<Text>().ToList();
 
-            for (int i = 0; i < lista.Count; i++)
+            for (int linhaAtual = 0; linhaAtual < listaComCadaUmaDasLinhasDoWord.Count; linhaAtual++)
             {
-                var text = lista[i];
+                var linha = listaComCadaUmaDasLinhasDoWord[linhaAtual];
 
-                foreach (KeyValuePair<string, string> item in dict)
+                foreach (KeyValuePair<string, string> item in dicionario)
                 {
-                    if (text.Text.Contains(item.Key))
+                    if (linha.Text.Contains(item.Key))
                     {
-                        text.Text = text.Text.Replace(item.Key, item.Value);
+                        linha.Text = linha.Text.Replace(item.Key, item.Value);
 
-                        if (text.Text == string.Empty)
+                        if (linha.Text == string.Empty)
                         {
-                            text.Parent.Parent.Remove();
-                            i--;
+                            linha.Parent.Parent.Remove();
+                            linhaAtual--;
                         }
                     }
                 }
             }
         }
 
-        private void PopularTabelas(WordprocessingDocument wordDoc, Clube clube)
+        private static void PopularTabelas(WordprocessingDocument wordDoc, Clube clube)
         {
             var body = wordDoc.MainDocumentPart.Document.Body;
             var paras = body.Elements<Table>();
@@ -124,41 +169,42 @@ namespace GeradorDocumentacao.API.Controllers
             //Ex-presidentes
             for (int i = 0; clube.ExPresidentes != null && i < clube.ExPresidentes.Count; i++)
             {
-                PopularTabela(paras.ToList()[0], $"{i + 1}.  {clube.ExPresidentes[i].Nome} - Gestão {clube.ExPresidentes[i].De} - {clube.ExPresidentes[i].Ate}");
+                PopularTabelaSimples(paras.ToList()[0], $"{i + 1}.  {clube.ExPresidentes[i].Nome} - Gestão {clube.ExPresidentes[i].De} - {clube.ExPresidentes[i].Ate}");
             }
 
             //Socios fundadores
             for (int i = 0; clube.SociosFundadores != null && i < clube.SociosFundadores.Count; i++)
             {
-                PopularTabela(paras.ToList()[1], $"{i + 1}.  {clube.SociosFundadores[i].Nome} - Gestão {clube.SociosFundadores[i].De} - {clube.SociosFundadores[i].Ate}");
+                PopularTabelaSimples(paras.ToList()[1], $"{i + 1}.  {clube.SociosFundadores[i].Nome} - Gestão {clube.SociosFundadores[i].De} - {clube.SociosFundadores[i].Ate}");
             }
 
             //soscios honorarios
             for (int i = 0; clube.SociosHonorarios != null && i < clube.SociosHonorarios.Count; i++)
             {
-                PopularTabela(paras.ToList()[2], $"{i + 1}.  {clube.SociosHonorarios[i].Nome} - Gestão {clube.SociosHonorarios[i].De} - {clube.SociosHonorarios[i].Ate}");
+                PopularTabelaSimples(paras.ToList()[2], $"{i + 1}.  {clube.SociosHonorarios[i].Nome} - Gestão {clube.SociosHonorarios[i].De} - {clube.SociosHonorarios[i].Ate}");
             }
 
             for (int i = 0; clube.PaulHarris != null && i < clube.PaulHarris.Count; i++)
             {
-                PopularTabela(paras.ToList()[3], $"{i + 1}. {clube.PaulHarris[i].Nome}");
+                PopularTabelaSimples(paras.ToList()[3], $"{i + 1}. {clube.PaulHarris[i].Nome}");
             }
 
             for (int i = 0; clube.ConcursosDistritais != null && i < clube.ConcursosDistritais.Count; i++)
             {
-                PopularTabela(paras.ToList()[4], $"{i + 1}. {clube.ConcursosDistritais[i].Descricao} - Gestão {clube.ConcursosDistritais[i].De} - {clube.ConcursosDistritais[i].Ate}");
+                PopularTabelaSimples(paras.ToList()[4], $"{i + 1}. {clube.ConcursosDistritais[i].Descricao} - Gestão {clube.ConcursosDistritais[i].De} - {clube.ConcursosDistritais[i].Ate}");
             }
 
             for (int i = 0; clube.MencoesPresidenciais != null && i < clube.MencoesPresidenciais.Count; i++)
             {
-                PopularTabela(paras.ToList()[5], $"{i + 1}. Gestão {clube.MencoesPresidenciais[i].De} - {clube.MencoesPresidenciais[i].Ate}");
+                PopularTabelaSimples(paras.ToList()[5], $"{i + 1}. Gestão {clube.MencoesPresidenciais[i].De} - {clube.MencoesPresidenciais[i].Ate}");
             }
 
-            //Popular despesas
             PopularTabelaComDespesas(paras.ToList()[6], clube.Despesas);
+
+            PopularCalendario(paras.ToList(), clube.Eventos);
         }
 
-        private void PopularTabela(Table tabela, string texto)
+        private static void PopularTabelaSimples(Table tabela, string texto)
         {
             tabela.Append(Utils.TabelaLinha(20, new List<Celula>
                 {
@@ -175,7 +221,7 @@ namespace GeradorDocumentacao.API.Controllers
                 }));
         }
 
-        private void PopularTabelaComDespesas(Table tabela, List<Despesa> despesas)
+        private static void PopularTabelaComDespesas(Table tabela, List<Despesa> despesas)
         {
             for (int count = 0; count < despesas.Count; count++)
             {
@@ -247,6 +293,16 @@ namespace GeradorDocumentacao.API.Controllers
                 }));
 
                 tabela.Append(new TableRow(new TableCell(new Paragraph(new Run(new Text(""))))));
+            }
+        }
+
+        private static void PopularCalendario(List<Table> tabelas, List<Evento> eventos)
+        {
+            foreach (var evento in eventos)
+            {
+                var tabela = tabelas[(int)evento.Mes];
+
+
             }
         }
     }

@@ -34,5 +34,7 @@ namespace GeradorDocumentacao.API.Models
         public List<ConcursoDistrital> ConcursosDistritais { get; set; }
         public List<MencaoPresidencial> MencoesPresidenciais { get; set; }
         public List<Despesa> Despesas { get; set; }
+
+        public List<Evento> Eventos { get; set; }
     }
 }

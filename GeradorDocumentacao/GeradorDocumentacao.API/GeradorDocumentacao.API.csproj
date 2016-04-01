@@ -166,11 +166,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\DocumentacaoController.cs" />
+    <Compile Include="Enuns\MesesComPosisaoNasTabelas.cs" />
     <Compile Include="Models\Cargo.cs" />
     <Compile Include="Models\Clube.cs" />
     <Compile Include="Models\ConcursoDistrital.cs" />
     <Compile Include="Models\Despesa.cs" />
     <Compile Include="Models\DespesaItem.cs" />
+    <Compile Include="Models\Evento.cs" />
     <Compile Include="Models\ExPresidente.cs" />
     <Compile Include="Models\MencaoPresidencial.cs" />
     <Compile Include="Models\PaulHarris.cs" />
