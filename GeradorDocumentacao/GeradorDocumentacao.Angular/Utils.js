@@ -139,7 +139,7 @@ function PrepararCampos(scope) {
             
             scope.UrlVoltar = '#/mensoes-presidenciais';
             scope.UrlRetorno = '#/despesas';
-            scope.UrlAvancar = '#/finalizar';
+            scope.UrlAvancar = '#/calendario';
             scope.UrlNovo = '#/despesas/cadastro';
             
             if (scope.Clube.Despesas == null || scope.Clube.Despesas == undefined)

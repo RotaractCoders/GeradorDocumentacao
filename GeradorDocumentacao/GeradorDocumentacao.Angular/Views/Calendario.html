@@ -1,0 +1,43 @@
+﻿<form name="form" class="css-form" novalidate>
+    <div class="form-horizontal">
+        <h2>Calendário</h2>
+        <hr />
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Quem</th>
+                    <th>Descrição</th>
+                    <th>Observação</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="CalendarioItem in Clube.Calendario">
+                    <td>{{CalendarioItem.Data}}</td>
+                    <td>{{CalendarioItem.Quem}}</td>
+                    <td>{{CalendarioItem.Descricao}}</td>
+                    <td>{{CalendarioItem.Observacao}}</td>
+                    <td>
+                        <button ng-click="Editar(CalendarioItem)" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </button>
+                        <button ng-click="Deletar($index)" class="btn btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="form-group">
+            <button ng-click="Novo(Clube)" class="btn btn-primary col-md-12">Novo</button>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-7 col-md-5">
+                <button ng-click="Salvar(Calendario)" ng-disabled="!form.$valid" class="btn btn-success">Salvar</button>
+            </div>
+        </div>
+    </div>
+</form>

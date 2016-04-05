@@ -1,0 +1,52 @@
+﻿<form name="form" class="css-form" novalidate>
+    <div class="form-horizontal">
+        <h2>Cadastro item do calendário</h2>
+        <hr />
+
+        <div class="form-group">
+            <label for="DespesaItemDescricao" class="control-label col-md-2">Data: </label>
+            <div class="col-md-6">
+                <input required ng-model="CalendarioItem.Data" type="date" class="form-control" name="CalendarioItemData" id="CalendarioItemData" />
+            </div>
+            <div class="col-md-4">
+                <p ng-show="form.CalendarioItemData.$error.required" class="help-block">A data é obrigatória</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="CalendarioItemQuem" class="control-label col-md-2">Quem realizara: </label>
+            <div class="col-md-6">
+                <input required ng-model="CalendarioItem.Quem" type="text" class="form-control" name="CalendarioItemQuem" id="CalendarioItemQuem" />
+            </div>
+            <div class="col-md-4">
+                <p ng-show="form.CalendarioItemQuem.$error.required" class="help-block">Quem realizara o evento é obrigatorio</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="CalendarioItemDescricao" class="control-label col-md-2">Descricao: </label>
+            <div class="col-md-6">
+                <input required ng-model="CalendarioItem.Descricao" type="text" class="form-control" name="CalendarioItemDescricao" id="CalendarioItemDescricao" />
+            </div>
+            <div class="col-md-4">
+                <p ng-show="form.CalendarioItemDescricao.$error.required" class="help-block">A descrição é obrigatório</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="CalendarioItemObservacao" class="control-label col-md-2">Observação: </label>
+            <div class="col-md-6">
+                <input ng-model="CalendarioItem.Observacao" type="text" class="form-control" name="CalendarioItemObservacao" id="CalendarioItemObservacao" />
+            </div>
+            <div class="col-md-4">
+                
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-7 col-md-5">
+                <button ng-click="Salvar(CalendarioItem)" ng-disabled="!form.$valid" class="btn btn-success">Salvar</button>
+            </div>
+        </div>
+    </div>
+</form>

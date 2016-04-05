@@ -41,7 +41,7 @@ namespace GeradorDocumentacao.API.Word
             return paragrafo;
         }
 
-        private static Run Texto(string fonte, int tamanhoFonte, bool sublinhado, bool negrito, string texto)
+        public static Run Texto(string fonte, int tamanhoFonte, bool sublinhado, bool negrito, string texto)
         {
             var run = new Run();
             run.Append(TextoPropriedades(fonte, tamanhoFonte, sublinhado, negrito));

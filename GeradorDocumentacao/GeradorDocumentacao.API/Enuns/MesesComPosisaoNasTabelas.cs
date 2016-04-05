@@ -8,17 +8,17 @@ namespace GeradorDocumentacao.API.Enuns
 {
     public enum MesesComPosisaoNasTabelas
     {
-        Julho = 7,
-        Agosto = 8,
-        Setembro = 9,
-        Outubro = 10,
-        Novembro = 11,
-        Dezembro = 12,
-        Janeiro = 13,
-        Fevereiro = 14,
-        Marco = 15,
-        Abril = 16,
-        Maio = 17,
-        Junho = 18
+        Julho = 8,
+        Agosto = 9,
+        Setembro = 10,
+        Outubro = 11,
+        Novembro = 12,
+        Dezembro = 13,
+        Janeiro = 14,
+        Fevereiro = 15,
+        Marco = 16,
+        Abril = 17,
+        Maio = 18,
+        Junho = 19
     }
 }

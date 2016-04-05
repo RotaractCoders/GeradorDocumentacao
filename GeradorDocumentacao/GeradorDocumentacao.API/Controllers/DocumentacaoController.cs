@@ -107,7 +107,7 @@ namespace GeradorDocumentacao.API.Controllers
             return dicionario;
         }
 
-        private static Dictionary<string,string> PopularDicionarioComDadosDoClube(Clube clube)
+        private static Dictionary<string, string> PopularDicionarioComDadosDoClube(Clube clube)
         {
             var dicionario = new Dictionary<string, string>();
 
@@ -201,7 +201,7 @@ namespace GeradorDocumentacao.API.Controllers
 
             PopularTabelaComDespesas(paras.ToList()[6], clube.Despesas);
 
-            PopularCalendario(paras.ToList(), clube.Eventos);
+            PopularCalendario(paras.ToList(), clube.Calendario);
         }
 
         private static void PopularTabelaSimples(Table tabela, string texto)
@@ -302,7 +302,51 @@ namespace GeradorDocumentacao.API.Controllers
             {
                 var tabela = tabelas[(int)evento.Mes];
 
+                SublinharCalendario(evento, tabela);
+                PopularEventosCalendario(evento, tabela);
+            }
+        }
 
+        private static void PopularEventosCalendario(Evento evento, Table tabela)
+        {
+            for (int y = 12; y < tabela.ChildElements.Count; y++)
+            {
+                var linha = tabela.ChildElements[y].Elements<TableCell>().ToList();
+
+                if (linha[0].InnerText.Trim() == evento.Dia.ToString())
+                {
+                    linha[2].Elements<Paragraph>().ToList()[0].Append(Utils.Texto("Tahoma", 15, false, true, evento.Quem));
+                    linha[3].Elements<Paragraph>().ToList()[0].Append(Utils.Texto("Tahoma", 15, false, true, evento.Descricao));
+                    linha[4].Elements<Paragraph>().ToList()[0].Append(Utils.Texto("Tahoma", 15, false, true, evento.Observacao));
+                }
+            }
+        }
+
+        private static void SublinharCalendario(Evento evento, Table tabela)
+        {
+            for (int y = 4; y < 10; y++)
+            {
+                for (int x = 1; x < 8; x++)
+                {
+                    if (tabela.ChildElements[y].ChildElements[x].ChildElements[1].ChildElements.Count < 2)
+                    {
+                        continue;
+                    }
+
+                    if (((Text)tabela.ChildElements[y].ChildElements[x].ChildElements[1].ChildElements[1].ChildElements[1]).Text.Trim() == evento.Dia.ToString())
+                    {
+                        if (tabela.ChildElements[y].ChildElements[x].ChildElements[0].Elements<Shading>().Count() > 0)
+                        {
+                            var cor = tabela.ChildElements[y].ChildElements[x].ChildElements[0].Elements<Shading>().ToList()[0];
+                            tabela.ChildElements[y].ChildElements[x].ChildElements[0].Elements<Shading>().ToList()[0].Fill = "ffff00";
+                            tabela.ChildElements[y].ChildElements[x].ChildElements[0].Elements<Shading>().ToList()[0].ThemeFill = null;// ThemeColorValues.Background1;
+                        }
+                        else
+                        {
+                            tabela.ChildElements[y].ChildElements[x].ChildElements[0].Append(new Shading() { Fill = "ffff00" });
+                        }
+                    }
+                }
             }
         }
     }
