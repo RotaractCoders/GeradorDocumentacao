@@ -6,7 +6,7 @@
         <div class="form-group">
             <label for="DespesaItemDescricao" class="control-label col-md-2">Data: </label>
             <div class="col-md-6">
-                <input required ng-model="CalendarioItem.Data" type="date" class="form-control" name="CalendarioItemData" id="CalendarioItemData" />
+                <input required ng-model="CalendarioItem.Data" format-date type="date" class="form-control" name="CalendarioItemData" id="CalendarioItemData" />
             </div>
             <div class="col-md-4">
                 <p ng-show="form.CalendarioItemData.$error.required" class="help-block">A data é obrigatória</p>
@@ -42,11 +42,16 @@
                 
             </div>
         </div>
+    </div>
+    <div class="row footer">
+        <div class="col-lg-offset-1 col-md-1">
+            <button ng-click="Voltar()" class="btn btn-lg btn-default">Voltar</button>
+        </div>
+        <div class="col-md-8">
 
-        <div class="form-group">
-            <div class="col-md-offset-7 col-md-5">
-                <button ng-click="Salvar(CalendarioItem)" ng-disabled="!form.$valid" class="btn btn-success">Salvar</button>
-            </div>
+        </div>
+        <div class="col-md-2">
+            <button ng-click="Salvar(CalendarioItem)" ng-disabled="!form.$valid" class="btn btn-lg btn-success">Salvar</button>
         </div>
     </div>
 </form>

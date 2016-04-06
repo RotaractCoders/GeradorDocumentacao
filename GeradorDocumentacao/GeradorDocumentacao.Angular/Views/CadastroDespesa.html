@@ -41,10 +41,16 @@
             <button ng-click="Novo(Clube)" class="btn btn-primary col-md-12">Novo</button>
         </div>
         
-        <div class="form-group">
-            <div class="col-md-offset-7 col-md-5">
-                <button ng-click="Salvar(Despesa)" ng-disabled="!form.$valid" class="btn btn-success">Salvar</button>
-            </div>
+    </div>
+    <div class="row footer">
+        <div class="col-lg-offset-1 col-md-1">
+            <button ng-click="Voltar()" class="btn btn-lg btn-default">Voltar</button>
+        </div>
+        <div class="col-md-8">
+
+        </div>
+        <div class="col-md-2">
+            <button ng-click="Salvar(Despesa)" ng-disabled="!form.$valid" class="btn btn-lg btn-success">Salvar</button>
         </div>
     </div>
 </form>

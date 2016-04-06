@@ -1,10 +1,15 @@
-app.controller('CadastroDespesaItemCtrl', function ($scope, $http) {
+app.controller('CadastroDespesaItemCtrl', function ($scope, $http, $location) {
     
     var update = false;
     var despesa;
     
     Carregar();
     
+    $scope.Voltar = function () {
+
+        location.assign('#/' + $location.$$path.split('/')[1] + '/' + $location.$$path.split('/')[2]);
+    }
+
 	$scope.Salvar = function(despesaItem) {
         
         if (!update) {

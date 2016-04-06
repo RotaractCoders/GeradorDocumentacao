@@ -21,7 +21,7 @@
                     <td ng-show="NomeVisivel">{{Dado.Nome}}</td>
                     <td ng-show="DescricaoVisivel">{{Dado.Descricao}}</td>
                     <td ng-show="EmailVisivel">{{Dado.Email}}</td>
-                    <td ng-show="DataNascimentoVisivel">{{Dado.DataNascimento}}</td>
+                    <td ng-show="DataNascimentoVisivel">{{Dado.DataNascimento | date : 'dd/MM/yyyy'}}</td>
                     <td ng-show="TelefoneVisivel">{{Dado.Telefone}}</td>
                     <td ng-show="DeVisivel">{{Dado.De}}</td>
                     <td ng-show="AteVisivel">{{Dado.Ate}}</td>
@@ -43,11 +43,22 @@
 
         <div class="form-group">
             <div class="col-md-offset-1 col-md-6">
-                <button ng-click="Voltar()" ng-disabled="!form.$valid" class="btn btn-default">Voltar</button>
+                
             </div>
             <div class="col-md-offset-3 col-md-2">
-                <button ng-click="Avancar(Clube)" ng-disabled="(Dados == null || Dados.length == 0) && Obrigatorio" class="btn btn-success">Avançar</button>
+                
             </div>
+        </div>
+    </div>
+    <div class="row footer">
+        <div class="col-md-offset-1 col-md-1">
+            <button ng-click="Voltar()" ng-disabled="!form.$valid" class="btn btn-lg btn-default">Voltar</button>
+        </div>
+        <div class="col-md-8">
+
+        </div>
+        <div class="col-md-2">
+            <button ng-click="Avancar(Clube)" ng-disabled="(Dados == null || Dados.length == 0) && Obrigatorio" class="btn btn-lg btn-success">Avançar</button>
         </div>
     </div>
 </form>

@@ -4,13 +4,18 @@
         <hr />
         
         <div class="form-group">
-            <button ng-click="Gerar(Clube)" class="btn btn-primary col-md-12">Gerar documentação</button>
+            <h2>Arquivo gerado com sucesso!</h2>
         </div>
+    </div>
+    <div class="row footer">
+        <div class="col-md-offset-1 col-md-1">
+            <button ng-click="Voltar()" ng-disabled="!form.$valid" class="btn btn-lg btn-default">Voltar</button>
+        </div>
+        <div class="col-md-8">
 
-        <div class="form-group">
-            <div class="col-md-offset-1 col-md-6">
-                <button ng-click="Voltar()" ng-disabled="!form.$valid" class="btn btn-default">Voltar</button>
-            </div>
+        </div>
+        <div class="col-md-2">
+            
         </div>
     </div>
 </form>

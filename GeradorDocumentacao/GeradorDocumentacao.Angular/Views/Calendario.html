@@ -1,6 +1,6 @@
 ﻿<form name="form" class="css-form" novalidate>
     <div class="form-horizontal">
-        <h2>Calendário</h2>
+        <h2>Calendário 11/11</h2>
         <hr />
         <table class="table table-striped">
             <thead>
@@ -14,12 +14,12 @@
             </thead>
             <tbody>
                 <tr ng-repeat="CalendarioItem in Clube.Calendario">
-                    <td>{{CalendarioItem.Data}}</td>
+                    <td>{{CalendarioItem.Data | date : 'dd/MM/yyyy'}}</td>
                     <td>{{CalendarioItem.Quem}}</td>
                     <td>{{CalendarioItem.Descricao}}</td>
                     <td>{{CalendarioItem.Observacao}}</td>
                     <td>
-                        <button ng-click="Editar(CalendarioItem)" class="btn btn-default btn-sm">
+                        <button margin:5px;" ng-click="Editar(CalendarioItem)" class="btn btn-default btn-sm">
                             <span class="glyphicon glyphicon-pencil"></span>
                         </button>
                         <button ng-click="Deletar($index)" class="btn btn-danger btn-sm">
@@ -34,10 +34,16 @@
             <button ng-click="Novo(Clube)" class="btn btn-primary col-md-12">Novo</button>
         </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-7 col-md-5">
-                <button ng-click="Salvar(Calendario)" ng-disabled="!form.$valid" class="btn btn-success">Salvar</button>
-            </div>
+    </div>
+    <div class="row footer">
+        <div class="col-md-offset-1 col-md-1">
+            <button ng-click="Voltar()" class="btn btn-lg btn-default">Voltar</button>
+        </div>
+        <div class="col-md-8">
+
+        </div>
+        <div class="col-md-2">
+            <button ng-click="Avancar(Clube)" ng-disabled="!form.$valid" class="btn btn-lg btn-success">Gerar arquivo</button>
         </div>
     </div>
 </form>

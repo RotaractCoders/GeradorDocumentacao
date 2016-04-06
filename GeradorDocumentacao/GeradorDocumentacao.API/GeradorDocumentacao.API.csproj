@@ -154,6 +154,8 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="Template.docx" />
+    <None Include="Properties\PublishProfiles\rotaract4430API - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\rotaract4430API - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

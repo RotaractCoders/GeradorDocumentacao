@@ -3,15 +3,15 @@ app.controller('FinalizarCtrl', function ($scope, $http) {
     Carregar();
     
     $scope.Voltar = function() {
-        location.assign('#/despesas');
+        location.assign('#/calendario');
     }
     
-    $scope.Gerar = function(clube) {
+    function Gerar(clube) {
         
         $http({
             method: 'POST',
             cache: false,
-            url: 'http://localhost:9699/api',
+            url: 'http://rotaract4430api.azurewebsites.net/api',
             responseType:'arraybuffer',
             data: clube,
             headers: {
@@ -44,5 +44,7 @@ app.controller('FinalizarCtrl', function ($scope, $http) {
     function Carregar() {
         
         $scope.Clube = JSON.parse(localStorage.getItem('clube'));
+
+        Gerar($scope.Clube);
     }
 });

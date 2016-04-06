@@ -1,8 +1,13 @@
-﻿app.controller('CalendarioItemCtrl', function ($scope, $http) {
+﻿app.controller('CalendarioItemCtrl', function ($scope, $http, $location) {
     
     var update = false;
 
     Carregar();
+
+    $scope.Voltar = function () {
+
+        location.assign('#/' + $location.$$path.split('/')[1]);
+    }
 
     $scope.Salvar = function (calendarioItem) {
 

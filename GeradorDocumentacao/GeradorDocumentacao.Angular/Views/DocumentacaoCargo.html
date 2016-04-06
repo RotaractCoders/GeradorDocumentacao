@@ -1,6 +1,6 @@
 <form name="form" class="css-form" novalidate>
     <div class="form-horizontal">
-        <h2>Cargos 3/5</h2>
+        <h2>Cargos 3/11</h2>
         <hr />
         
         <div class="form-group">
@@ -158,15 +158,16 @@
                 
             </div>
         </div>
-        
-        <div class="form-group">
-            <div class="col-md-offset-1 col-md-6">
-                <button ng-click="Voltar()" class="btn btn-default">Voltar</button>
-            </div>
-            <div class="col-md-offset-3 col-md-2">
-                <button ng-click="Avancar(Clube)" ng-disabled="!form.$valid" class="btn btn-success">Avançar</button>
-            </div>
+    </div>
+    <div class="row footer">
+        <div class="col-md-offset-1 col-md-1">
+            <button ng-click="Voltar()" class="btn btn-lg btn-default">Voltar</button>
         </div>
-        
+        <div class="col-md-8">
+
+        </div>
+        <div class="col-md-2">
+            <button ng-click="Avancar(Clube)" ng-disabled="!form.$valid" class="btn btn-lg btn-success">Avançar</button>
+        </div>
     </div>
 </form>

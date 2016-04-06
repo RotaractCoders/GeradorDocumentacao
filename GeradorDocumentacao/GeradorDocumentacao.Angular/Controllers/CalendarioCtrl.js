@@ -2,7 +2,12 @@
 
     Carregar();
 
-    $scope.Salvar = function (dados) {
+    $scope.Voltar = function () {
+
+        location.assign('#/despesas');
+    }
+
+    $scope.Avancar = function (dados) {
 
         localStorage.setItem('clube', JSON.stringify($scope.Clube));
         localStorage.removeItem('dados');

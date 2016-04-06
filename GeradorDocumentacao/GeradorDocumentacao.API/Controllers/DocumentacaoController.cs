@@ -112,7 +112,7 @@ namespace GeradorDocumentacao.API.Controllers
             var dicionario = new Dictionary<string, string>();
 
             dicionario.Add("@nome", clube.Nome.ToUpper());
-            dicionario.Add("@data_fundacao", $"{ clube.DataFundacao.Day } DE { clube.DataFundacao.ToString("MMMM").ToUpper() } DE { clube.DataFundacao.Year }");
+            dicionario.Add("@data_fundacao", $"  { clube.DataFundacao.Day } DE { clube.DataFundacao.ToString("MMMM").ToUpper() } DE { clube.DataFundacao.Year }");
             dicionario.Add("@clube_padrinho", $"CLUBE PADRINHO: { clube.ClubePadrinho}");
             dicionario.Add("@reuniao_local", clube.ReuniaoLocal);
             dicionario.Add("@reuniao_horario", clube.ReuniaoHorario);
@@ -139,69 +139,146 @@ namespace GeradorDocumentacao.API.Controllers
         {
             var corpoDoWord = wordDoc.MainDocumentPart.Document.Body;
 
-            var listaComCadaUmaDasLinhasDoWord = corpoDoWord.Descendants<Text>().ToList();
+            var paragrafos = corpoDoWord.Elements<Paragraph>().ToList();
 
-            for (int linhaAtual = 0; linhaAtual < listaComCadaUmaDasLinhasDoWord.Count; linhaAtual++)
+            foreach (var paragrafo in paragrafos)
             {
-                var linha = listaComCadaUmaDasLinhasDoWord[linhaAtual];
+                var linha = paragrafo.InnerText;
 
-                foreach (KeyValuePair<string, string> item in dicionario)
+                if (linha.Contains("@"))
                 {
-                    if (linha.Text.Contains(item.Key))
+                    foreach (KeyValuePair<string, string> item in dicionario)
                     {
-                        linha.Text = linha.Text.Replace(item.Key, item.Value);
-
-                        if (linha.Text == string.Empty)
+                        if (linha.Contains(item.Key))
                         {
-                            linha.Parent.Parent.Remove();
-                            linhaAtual--;
+                            var substituiu = false;
+
+                            var textos = paragrafo.Elements<Run>().ToList();
+
+                            foreach (var texto in textos)
+                            {
+                                if (texto.Elements<Text>().ToList()[0].Text.Contains(item.Key))
+                                {
+                                    substituiu = true;
+                                    texto.Elements<Text>().ToList()[0].Text = texto.Elements<Text>().ToList()[0].Text.Replace(item.Key, item.Value);
+
+                                    if (string.IsNullOrEmpty(texto.Elements<Text>().ToList()[0].Text))
+                                    {
+                                        paragrafo.Remove();
+                                    }
+
+                                    break;
+                                }
+                            }
+
+                            if (!substituiu)
+                            {
+                                for (int i = 0; i < textos.Count; i++)
+                                {
+                                    if (textos[i].Elements<Text>().ToList()[0].Text.Contains(item.Key.Replace("@", string.Empty)))
+                                    {
+                                        textos[i - 1].Elements<Text>().ToList()[0].Text = textos[i - 1].Elements<Text>().ToList()[0].Text.Replace("@", string.Empty);
+                                        textos[i].Elements<Text>().ToList()[0].Text = textos[i].Elements<Text>().ToList()[0].Text.Replace(item.Key.Replace("@", string.Empty), item.Value);
+
+                                        if (string.IsNullOrEmpty(textos[i].Elements<Text>().ToList()[0].Text))
+                                        {
+                                            paragrafo.Remove();
+                                        }
+
+                                        break;
+                                    }
+                                }
+                            }
+
+                            break;
                         }
                     }
                 }
             }
+
+            //var listaComCadaUmaDasLinhasDoWord = corpoDoWord.Descendants<Text>().ToList();
+
+            //for (int linhaAtual = 0; linhaAtual < listaComCadaUmaDasLinhasDoWord.Count; linhaAtual++)
+            //{
+            //    var linha = listaComCadaUmaDasLinhasDoWord[linhaAtual];
+
+            //    foreach (KeyValuePair<string, string> item in dicionario)
+            //    {
+            //        if (linha.Text.Contains(item.Key))
+            //        {
+            //            linha.Text = linha.Text.Replace(item.Key, item.Value);
+
+            //            if (linha.Text == string.Empty)
+            //            {
+            //                linha.Parent.Parent.Remove();
+            //                linhaAtual--;
+            //            }
+            //        }
+            //    }
+            //}
         }
 
         private static void PopularTabelas(WordprocessingDocument wordDoc, Clube clube)
         {
             var body = wordDoc.MainDocumentPart.Document.Body;
-            var paras = body.Elements<Table>();
+            var tabelas = body.Elements<Table>().ToList();
 
             //Ex-presidentes
             for (int i = 0; clube.ExPresidentes != null && i < clube.ExPresidentes.Count; i++)
             {
-                PopularTabelaSimples(paras.ToList()[0], $"{i + 1}.  {clube.ExPresidentes[i].Nome} - Gestão {clube.ExPresidentes[i].De} - {clube.ExPresidentes[i].Ate}");
+                PopularTabelaSimples(tabelas[0], $"{i + 1}.  {clube.ExPresidentes[i].Nome} - Gestão {clube.ExPresidentes[i].De} - {clube.ExPresidentes[i].Ate}");
             }
 
             //Socios fundadores
             for (int i = 0; clube.SociosFundadores != null && i < clube.SociosFundadores.Count; i++)
             {
-                PopularTabelaSimples(paras.ToList()[1], $"{i + 1}.  {clube.SociosFundadores[i].Nome} - Gestão {clube.SociosFundadores[i].De} - {clube.SociosFundadores[i].Ate}");
+                PopularTabelaSimples(tabelas[1], $"{i + 1}.  {clube.SociosFundadores[i].Nome}");
             }
 
             //soscios honorarios
             for (int i = 0; clube.SociosHonorarios != null && i < clube.SociosHonorarios.Count; i++)
             {
-                PopularTabelaSimples(paras.ToList()[2], $"{i + 1}.  {clube.SociosHonorarios[i].Nome} - Gestão {clube.SociosHonorarios[i].De} - {clube.SociosHonorarios[i].Ate}");
+                PopularTabelaSimples(tabelas[2], $"{i + 1}.  {clube.SociosHonorarios[i].Nome} - Gestão {clube.SociosHonorarios[i].De} - {clube.SociosHonorarios[i].Ate}");
             }
 
             for (int i = 0; clube.PaulHarris != null && i < clube.PaulHarris.Count; i++)
             {
-                PopularTabelaSimples(paras.ToList()[3], $"{i + 1}. {clube.PaulHarris[i].Nome}");
+                PopularTabelaSimples(tabelas[3], $"{i + 1}. {clube.PaulHarris[i].Nome}");
             }
 
             for (int i = 0; clube.ConcursosDistritais != null && i < clube.ConcursosDistritais.Count; i++)
             {
-                PopularTabelaSimples(paras.ToList()[4], $"{i + 1}. {clube.ConcursosDistritais[i].Descricao} - Gestão {clube.ConcursosDistritais[i].De} - {clube.ConcursosDistritais[i].Ate}");
+                PopularTabelaSimples(tabelas[4], $"{i + 1}. {clube.ConcursosDistritais[i].Descricao} - Gestão {clube.ConcursosDistritais[i].De} - {clube.ConcursosDistritais[i].Ate}");
             }
 
             for (int i = 0; clube.MencoesPresidenciais != null && i < clube.MencoesPresidenciais.Count; i++)
             {
-                PopularTabelaSimples(paras.ToList()[5], $"{i + 1}. Gestão {clube.MencoesPresidenciais[i].De} - {clube.MencoesPresidenciais[i].Ate}");
+                PopularTabelaSimples(tabelas[5], $"{i + 1}. Gestão {clube.MencoesPresidenciais[i].De} - {clube.MencoesPresidenciais[i].Ate}");
             }
 
-            PopularTabelaComDespesas(paras.ToList()[6], clube.Despesas);
+            PopularTabelaComDespesas(tabelas[6], clube.Despesas);
 
-            PopularCalendario(paras.ToList(), clube.Calendario);
+            var countTabelas = 0;
+
+            for (var i = 0; i < body.Elements().Count(); i++)
+            {
+                if (body.Elements().ToList()[i].GetType() == typeof(Table))
+                {
+                    countTabelas++;
+                }
+
+                if (countTabelas == 7)
+                {
+                    for (var x = i; x < i + clube.Despesas.Sum(z => z.DespesaItens.Count()) + 5; x++)
+                    {
+                        body.Elements().ToList()[x + 10].Remove();
+                    }
+
+                    break;
+                }
+            }
+
+            PopularCalendario(tabelas.ToList(), clube.Calendario);
         }
 
         private static void PopularTabelaSimples(Table tabela, string texto)

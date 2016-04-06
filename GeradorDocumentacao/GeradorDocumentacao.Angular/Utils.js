@@ -15,6 +15,8 @@ function PrepararCampos(scope) {
             scope.UrlRetorno = '#/socios';
             scope.UrlAvancar = '#/cargos';
             scope.UrlNovo = '#/socios/cadastro';
+
+            scope.Titulo = 'Socios 2/11';
             
             if (scope.Clube.Socios == null || scope.Clube.Socios == undefined)
             {
@@ -35,6 +37,8 @@ function PrepararCampos(scope) {
             scope.UrlAvancar = '#/socios-fundadores';
             scope.UrlNovo = '#/ex-presidentes/cadastro';
             
+            scope.Titulo = 'Ex-Presidentes 4/11';
+
             if (scope.Clube.ExPresidentes == null || scope.Clube.ExPresidentes == undefined)
             {
                 scope.Clube.ExPresidentes = [];
@@ -52,6 +56,8 @@ function PrepararCampos(scope) {
             scope.UrlAvancar = '#/socios-honorarios';
             scope.UrlNovo = '#/socios-fundadores/cadastro';
             
+            scope.Titulo = 'Socios-Fundadores 5/11';
+
             if (scope.Clube.SociosFundadores == null || scope.Clube.SociosFundadores == undefined)
             {
                 scope.Clube.SociosFundadores = [];
@@ -71,6 +77,8 @@ function PrepararCampos(scope) {
             scope.UrlAvancar = '#/paul-harris';
             scope.UrlNovo = '#/socios-honorarios/cadastro';
             
+            scope.Titulo = 'Socios-Honorarios 6/11';
+
             if (scope.Clube.SociosHonorarios == null || scope.Clube.SociosHonorarios == undefined)
             {
                 scope.Clube.SociosHonorarios = [];
@@ -88,6 +96,8 @@ function PrepararCampos(scope) {
             scope.UrlAvancar = '#/concursos-distritais';
             scope.UrlNovo = '#/paul-harris/cadastro';
             
+            scope.Titulo = 'Paul-Harris 7/11';
+
             if (scope.Clube.PaulHarris == null || scope.Clube.PaulHarris == undefined)
             {
                 scope.Clube.PaulHarris = [];
@@ -107,6 +117,8 @@ function PrepararCampos(scope) {
             scope.UrlAvancar = '#/mensoes-presidenciais';
             scope.UrlNovo = '#/concursos-distritais/cadastro';
             
+            scope.Titulo = 'Concursos-Distritais 8/11';
+
             if (scope.Clube.ConcursosDistritais == null || scope.Clube.ConcursosDistritais == undefined)
             {
                 scope.Clube.ConcursosDistritais = [];
@@ -125,6 +137,8 @@ function PrepararCampos(scope) {
             scope.UrlAvancar = '#/despesas';
             scope.UrlNovo = '#/mensoes-presidenciais/cadastro';
             
+            scope.Titulo = 'Mensoes-Presidenciais 9/11';
+
             if (scope.Clube.MensoesPresidenciais == null || scope.Clube.MensoesPresidenciais == undefined)
             {
                 scope.Clube.MensoesPresidenciais = [];
@@ -142,6 +156,8 @@ function PrepararCampos(scope) {
             scope.UrlAvancar = '#/calendario';
             scope.UrlNovo = '#/despesas/cadastro';
             
+            scope.Titulo = 'Despesas 10/11';
+
             if (scope.Clube.Despesas == null || scope.Clube.Despesas == undefined)
             {
                 scope.Clube.Despesas = [];

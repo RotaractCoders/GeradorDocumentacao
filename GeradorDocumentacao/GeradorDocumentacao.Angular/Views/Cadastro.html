@@ -26,7 +26,7 @@
         <div class="form-group" ng-show="DeVisivel">
             <label for="DadosDe" class="control-label col-md-2">Ano inicio da gestão: </label>
             <div class="col-md-6">
-                <input required ng-model="Dados.De" type="number" min="1900" max="2016" class="form-control" name="DadosDe" id="DadosDe" />
+                <input required ng-model="Dados.De" ng-change="Dados.Ate = form.DadosDe.$valid ? Dados.De + 1 : ''" type="number" min="1900" max="2016" class="form-control" name="DadosDe" id="DadosDe" />
             </div>
             <div class="col-md-4">
                 <p ng-show="form.DadosDe.$error.required" class="help-block">O ano de inicio da gestão é obrigatório</p>
@@ -37,7 +37,7 @@
         <div class="form-group" ng-show="AteVisivel">
             <label for="DadosAte" class="control-label col-md-2">Ano final da gestão: </label>
             <div class="col-md-6">
-                <input required ng-model="Dados.Ate" type="number" min="1900" max="2016" class="form-control" name="DadosAte" id="DadosAte" />
+                <input required ng-model="Dados.Ate" ng-disabled="true"  type="number" min="1900" max="2016" class="form-control" name="DadosAte" id="DadosAte" />
             </div>
             <div class="col-md-4">
                 <p ng-show="form.DadosAte.$error.required" class="help-block">O ano do final da gestão é obrigatório</p>
@@ -59,7 +59,7 @@
         <div class="form-group" ng-show="DataNascimentoVisivel">
             <label for="DadosDataNascimento" class="control-label col-md-2">Data de nascimento: </label>
             <div class="col-md-6">
-                <input required ng-model="Dados.DataNascimento" type="date" class="form-control" name="DadosDataNascimento" id="DadosDataNascimento" />
+                <input required ng-model="Dados.DataNascimento" format-date type="date" class="form-control" name="DadosDataNascimento" id="DadosDataNascimento" />
             </div>
             <div class="col-md-4">
                 <p ng-show="form.DadosDataNascimento.$error.required" class="help-block">A data de nascimento é obrigatório</p>
@@ -75,11 +75,16 @@
                 <p ng-show="form.DadosTelefone.$error.required" class="help-block">O telefone é obrigatório</p>
             </div>
         </div>
-        
-        <div class="form-group">
-            <div class="col-md-offset-7 col-md-5">
-                <button ng-click="Salvar(Dados)" ng-disabled="(!form.DadosNome.$valid && NomeVisivel) || (!form.DadosDescricao.$valid && DescricaoVisivel) || (!form.DadosDe.$valid && DeVisivel) || (!form.DadosAte.$valid && AteVisivel) || (!form.DadosEmail.$valid && EmailVisivel) || (!form.DadosDataNascimento.$valid && DataNascimentoVisivel) || (!form.DadosTelefone.$valid && TelefoneVisivel)" class="btn btn-success">Salvar</button>
-            </div>
+    </div>
+    <div class="row footer">
+        <div class="col-lg-offset-1 col-md-1">
+            <button ng-click="Voltar()" class="btn btn-lg btn-default">Voltar</button>
+        </div>
+        <div class="col-md-8">
+
+        </div>
+        <div class="col-md-2">
+            <button ng-click="Salvar(Dados)" ng-disabled="(!form.DadosNome.$valid && NomeVisivel) || (!form.DadosDescricao.$valid && DescricaoVisivel) || (!form.DadosDe.$valid && DeVisivel) || (!form.DadosAte.$valid && AteVisivel) || (!form.DadosEmail.$valid && EmailVisivel) || (!form.DadosDataNascimento.$valid && DataNascimentoVisivel) || (!form.DadosTelefone.$valid && TelefoneVisivel)" class="btn btn-lg btn-success">Salvar</button>
         </div>
     </div>
 </form>

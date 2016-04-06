@@ -1,4 +1,17 @@
-var app = angular.module("app", ['ngRoute', 'angular.filter']);
+var app = angular
+    .module("app", ['ui.date', 'ngRoute', 'angular.filter'])
+    .directive('formatDate',formatDate);
+
+function formatDate(){
+    return {
+        require: 'ngModel',
+        link: function(scope, elem, attr, modelCtrl) {
+            modelCtrl.$formatters.push(function(modelValue){
+                return new Date(modelValue);
+            })
+        }
+    }
+}
 
 app.config(['$routeProvider', function ($routeProvider) {
 	$routeProvider

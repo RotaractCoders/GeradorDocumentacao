@@ -12,7 +12,6 @@
   "ignore": [
     "**/.*",
     "node_modules",
-    "bower_components",
     "test",
     "tests"
   ],
@@ -21,7 +20,9 @@
     "jquery": "^2.2.0",
     "bootstrap": "^3.3.6",
     "angular-route": "^1.5.0",
-    "angular-filter": "^0.5.8"
+    "angular-filter": "^0.5.8",
+    "angular-input-date": "^1.0.4",
+    "angular-ui-date": "^1.0.0"
   },
   "devDependencies": {
     "underscore": "^1.8.3"
